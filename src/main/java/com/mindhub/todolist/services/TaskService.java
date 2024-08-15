@@ -12,7 +12,7 @@ public interface TaskService {
 
     List<Tasks> findAll();
 
-    Tasks createTask(TaskDTO taskDTO);
+    TaskDTO createNewTask(TaskDTO taskDTO);
 
     Tasks updateTask(Long id, TaskDTO taskDTO);
 

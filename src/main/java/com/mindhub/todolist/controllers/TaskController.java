@@ -21,7 +21,7 @@ public class TaskController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get ", description = "Retrieve a Task entity by its ID.")
-    public ResponseEntity<TaskDTO> geTaskById(@PathVariable long id){
+    public ResponseEntity<TaskDTO> geTaskById(@PathVariable Long id){
         return ResponseEntity.ok(new TaskDTO(taskService.findById(id)));
     }
 
@@ -32,23 +32,24 @@ public class TaskController {
         return new ResponseEntity<>( allTask, HttpStatus.OK);
     }
 
-    @PostMapping("/newtask")
+
+    @PostMapping("/createdTask")
     @Operation(summary = "POST ", description = "Create a new Task entity.")
-    public ResponseEntity<Tasks> createTask(@RequestBody TaskDTO taskDTO){
-        Tasks createdTask = taskService.createTask(taskDTO);
-        return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
+    public ResponseEntity<TaskDTO> createdNewTask(@RequestBody TaskDTO taskDTO){
+        TaskDTO create = taskService.createNewTask(taskDTO);
+        return new ResponseEntity<>(create, HttpStatus.CREATED);
     }
 
     @PutMapping("/updatetask/{id}")
     @Operation(summary = "UPDATE ", description = "Update an existing Task entity.")
-    public ResponseEntity<Tasks> updateTask(@PathVariable long id, @RequestBody TaskDTO taskDTO){
+    public ResponseEntity<Tasks> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO){
         Tasks updateTask = taskService.updateTask(id, taskDTO);
         return new ResponseEntity<>(updateTask, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete ", description = "Delete a Task entity by its ID.")
-    public ResponseEntity<String> deleteTask(@PathVariable long id){
+    public ResponseEntity<String> deleteTask(@PathVariable Long id){
         taskService.deleteTask(id);
         return ResponseEntity.ok("");
     }

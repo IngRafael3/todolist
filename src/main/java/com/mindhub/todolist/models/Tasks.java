@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Tasks {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title, description;
     @Enumerated(EnumType.STRING)
@@ -20,10 +20,10 @@ public class Tasks {
     }
 
     public Tasks( String title, String description, EnumTask status) {
-
         this.title = title;
         this.description = description;
         this.status = status;
+
     }
 
     public Long getId() {

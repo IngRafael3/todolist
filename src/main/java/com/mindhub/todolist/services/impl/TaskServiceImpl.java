@@ -3,15 +3,17 @@ package com.mindhub.todolist.services.impl;
 
 import com.mindhub.todolist.dtos.TaskDTO;
 import com.mindhub.todolist.exceptions.NotFoundTaskException;
+import com.mindhub.todolist.exceptions.NotFoundUserException;
 import com.mindhub.todolist.models.Tasks;
 import com.mindhub.todolist.models.UserEntity;
 import com.mindhub.todolist.repositories.TaskRepository;
+import com.mindhub.todolist.repositories.UserEntityRepository;
 import com.mindhub.todolist.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 
 @Service
@@ -19,6 +21,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private UserEntityRepository userEntityRepository;
 
     @Override
     public Tasks findById(Long id) {
@@ -30,15 +35,40 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findAll();
     }
 
-    @Override
-    public Tasks createTask(TaskDTO taskDTO){
-        Tasks tasks = new Tasks();
-        tasks.setTitle(taskDTO.getTitle());
-        tasks.setDescription(taskDTO.getDescription());
-        tasks.setStatus(taskDTO.getStatus());
-
-        return taskRepository.save(tasks);
+//
+    private Tasks convertToEntity(TaskDTO taskDTO) {
+        Tasks task = new Tasks();
+        task.setTitle(taskDTO.getTitle());
+        task.setDescription(taskDTO.getDescription());
+        task.setStatus(taskDTO.getStatus());
+        return task;
     }
+
+    private TaskDTO convertToDTO(Tasks task) {
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setId(task.getId());
+        taskDTO.setTitle(task.getTitle());
+        taskDTO.setDescription(task.getDescription());
+        taskDTO.setStatus(task.getStatus());
+        taskDTO.setUserId(task.getUser().getId());
+        return taskDTO;
+
+    }
+
+    @Override
+    public TaskDTO createNewTask(TaskDTO taskDTO){
+        Tasks tasks1 = new Tasks();
+        tasks1.setTitle(taskDTO.getTitle());
+        tasks1.setDescription(taskDTO.getDescription());
+        tasks1.setStatus(taskDTO.getStatus());
+        UserEntity user1 = userEntityRepository.findById(1L).orElse(null);
+        tasks1.setUser(user1);
+        Tasks savedTask = taskRepository.save(tasks1);
+        return convertToDTO(savedTask);
+    }
+ //
+
+
 
     @Override
     public Tasks updateTask(Long id, TaskDTO taskDTO){

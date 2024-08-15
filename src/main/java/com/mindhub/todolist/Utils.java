@@ -19,9 +19,8 @@ public class Utils {
 
             UserEntity user = new UserEntity("Rafael","1234","hola@gmail.com");
             userEntityRepository.save(user);
-
             Tasks task = new Tasks("Tarea1","Ejercicio1", EnumTask.PENDING);
-            //user.addTasks(task);
+            user.addTasks(task);
             taskRepository.save(task);
 
             Tasks tarea = taskRepository.findById(1L).orElseThrow(()->new NotFoundTaskException("No se encontro la tarea con ese id"));

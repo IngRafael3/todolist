@@ -11,14 +11,14 @@ public class TaskDTO {
     private String title, description;
     @Enumerated(EnumType.STRING)
     private EnumTask status;
-  // private String status;
+    private Long userId;
 
 
-    public TaskDTO(Tasks tasks) {
-        this.id = tasks.getId();
+       public TaskDTO(Tasks tasks) {
         this.title = tasks.getTitle();
         this.description = tasks.getDescription();
         this.status = tasks.getStatus();
+        this.userId = tasks.getUser().getId();
     }
 
     public TaskDTO() {
@@ -28,6 +28,9 @@ public class TaskDTO {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getTitle() {
         return title;
     }
@@ -38,5 +41,25 @@ public class TaskDTO {
 
     public EnumTask getStatus() {
         return status;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStatus(EnumTask status) {
+        this.status = status;
     }
 }

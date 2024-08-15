@@ -11,7 +11,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id = 0L;
+    private Long id;
 
     private String username, password;
 
@@ -36,6 +36,11 @@ public class UserEntity {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
     public String getUsername() {
         return username;
     }
@@ -58,6 +63,16 @@ public class UserEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 
     public Set<Tasks> getTarea() {
