@@ -14,7 +14,8 @@ public class TaskDTO {
     private Long userId;
 
 
-       public TaskDTO(Tasks tasks) {
+    public TaskDTO(Tasks tasks) {
+        this.id = tasks.getId();
         this.title = tasks.getTitle();
         this.description = tasks.getDescription();
         this.status = tasks.getStatus();
