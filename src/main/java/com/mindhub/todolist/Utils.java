@@ -6,18 +6,23 @@ import com.mindhub.todolist.models.UserEntity;
 import com.mindhub.todolist.repositories.TaskRepository;
 import com.mindhub.todolist.repositories.UserEntityRepository;
 import com.mindhub.todolist.utils.EnumTask;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class Utils {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Bean
     public CommandLineRunner initData(UserEntityRepository userEntityRepository, TaskRepository taskRepository){
         return args ->{
 
-            UserEntity user = new UserEntity("Rafael","1234","hola@gmail.com");
+            UserEntity user = new UserEntity("Rafael",passwordEncoder.encode("12345"),"rafael@gmail.com");
             userEntityRepository.save(user);
             Tasks task = new Tasks("Tarea1","Ejercicio1", EnumTask.PENDING);
             user.addTasks(task);

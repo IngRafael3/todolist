@@ -8,13 +8,16 @@ import java.util.Optional;
 
 public interface TaskService {
 
-    Tasks findById(Long id);
+    //Tasks findById(Long id);
 
-    List<Tasks> findAll();
+    Optional<TaskDTO> findById(Long id);
+
+    //List<Tasks> findAll();
+    List<TaskDTO> findAll();
 
     TaskDTO createNewTask(TaskDTO taskDTO);
 
-    Tasks updateTask(Long id, TaskDTO taskDTO);
+    TaskDTO updateTask(Long id, TaskDTO taskDTO);
 
     void deleteTask(Long id);
 

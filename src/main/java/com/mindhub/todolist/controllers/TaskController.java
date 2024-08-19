@@ -2,7 +2,6 @@ package com.mindhub.todolist.controllers;
 
 
 import com.mindhub.todolist.dtos.TaskDTO;
-import com.mindhub.todolist.models.Tasks;
 import com.mindhub.todolist.services.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +18,21 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @GetMapping("/{id}")
+/*    @GetMapping("/{id}")
     @Operation(summary = "Get ", description = "Retrieve a Task entity by its ID.")
     public ResponseEntity<TaskDTO> geTaskById(@PathVariable Long id){
         return ResponseEntity.ok(new TaskDTO(taskService.findById(id)));
+    }*/
+    @GetMapping("/{id}")
+    @Operation(summary = "Get ", description = "Retrieve a Task entity by its ID.")
+    public TaskDTO geTaskById(@PathVariable Long id){
+        return taskService.findById(id).orElse(null);
     }
 
     @GetMapping("/alltask")
     @Operation(summary = "Get ", description = "Retrieve all Task entities.")
-    public ResponseEntity<List<Tasks>> geTaskById(){
-        List<Tasks> allTask =  taskService.findAll();
+    public ResponseEntity<List<TaskDTO>> geTaskById(){
+        List<TaskDTO> allTask =  taskService.findAll();
         return new ResponseEntity<>( allTask, HttpStatus.OK);
     }
 
@@ -42,8 +46,8 @@ public class TaskController {
 
     @PutMapping("/updatetask/{id}")
     @Operation(summary = "UPDATE ", description = "Update an existing Task entity.")
-    public ResponseEntity<Tasks> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO){
-        Tasks updateTask = taskService.updateTask(id, taskDTO);
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO){
+        TaskDTO updateTask = taskService.updateTask(id, taskDTO);
         return new ResponseEntity<>(updateTask, HttpStatus.OK);
     }
 

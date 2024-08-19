@@ -3,7 +3,6 @@ package com.mindhub.todolist.services.impl;
 
 import com.mindhub.todolist.dtos.TaskDTO;
 import com.mindhub.todolist.exceptions.NotFoundTaskException;
-import com.mindhub.todolist.exceptions.NotFoundUserException;
 import com.mindhub.todolist.models.Tasks;
 import com.mindhub.todolist.models.UserEntity;
 import com.mindhub.todolist.repositories.TaskRepository;
@@ -13,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,15 +25,25 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private UserEntityRepository userEntityRepository;
 
-    @Override
+  /*  @Override
     public Tasks findById(Long id) {
         return taskRepository.findById(id).orElseThrow( ()-> new NotFoundTaskException("no existe una tarea con id "+ id));
+    }*/
+
+      @Override
+    public Optional<TaskDTO> findById(Long id) {
+          return taskRepository.findById(id).map(this::convertToDTO);
     }
 
     @Override
-    public List<Tasks> findAll(){
-        return taskRepository.findAll();
+    public List<TaskDTO> findAll(){
+          return taskRepository.findAll().stream()
+                  .map(this::convertToDTO)
+                  .collect(Collectors.toList());
     }
+/*    public List<Tasks> findAll(){
+        return taskRepository.findAll();
+    }*/
 
 //
     private Tasks convertToEntity(TaskDTO taskDTO) {
@@ -70,7 +80,7 @@ public class TaskServiceImpl implements TaskService {
 
 
 
-    @Override
+  /*  @Override
     public Tasks updateTask(Long id, TaskDTO taskDTO){
         Tasks updatedTask = taskRepository.findById(id).get();
         updatedTask.setTitle(taskDTO.getTitle());
@@ -78,7 +88,16 @@ public class TaskServiceImpl implements TaskService {
         updatedTask.setDescription(taskDTO.getDescription());
 
         return taskRepository.save(updatedTask);
-    }
+    }*/
+  @Override
+  public TaskDTO updateTask(Long id, TaskDTO taskDTO) {
+      Tasks task = taskRepository.findById(id).orElseThrow();
+      task.setTitle(taskDTO.getTitle());
+      task.setDescription(taskDTO.getDescription());
+      task.setStatus(taskDTO.getStatus());
+      task = taskRepository.save(task);
+      return convertToDTO(task);
+  }
 
     @Override
     public void deleteTask(Long id){
