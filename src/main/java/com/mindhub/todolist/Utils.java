@@ -1,6 +1,7 @@
 package com.mindhub.todolist;
 
 import com.mindhub.todolist.exceptions.NotFoundTaskException;
+import com.mindhub.todolist.models.RolEnum;
 import com.mindhub.todolist.models.Tasks;
 import com.mindhub.todolist.models.UserEntity;
 import com.mindhub.todolist.repositories.TaskRepository;
@@ -22,8 +23,12 @@ public class Utils {
     public CommandLineRunner initData(UserEntityRepository userEntityRepository, TaskRepository taskRepository){
         return args ->{
 
-            UserEntity user = new UserEntity("Rafael",passwordEncoder.encode("12345"),"rafael@gmail.com");
+            UserEntity user = new UserEntity("Rafael",passwordEncoder.encode("12345"),"rafael@gmail.com", RolEnum.ADMIN);
             userEntityRepository.save(user);
+
+            UserEntity user2 = new UserEntity("Jose",passwordEncoder.encode("123456"),"jose@gmail.com", RolEnum.USER);
+            userEntityRepository.save(user2);
+
             Tasks task = new Tasks("Tarea1","Ejercicio1", EnumTask.PENDING);
             user.addTasks(task);
             taskRepository.save(task);

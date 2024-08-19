@@ -46,13 +46,6 @@ public class TaskServiceImpl implements TaskService {
     }*/
 
 //
-    private Tasks convertToEntity(TaskDTO taskDTO) {
-        Tasks task = new Tasks();
-        task.setTitle(taskDTO.getTitle());
-        task.setDescription(taskDTO.getDescription());
-        task.setStatus(taskDTO.getStatus());
-        return task;
-    }
 
     private TaskDTO convertToDTO(Tasks task) {
         TaskDTO taskDTO = new TaskDTO();
@@ -78,17 +71,6 @@ public class TaskServiceImpl implements TaskService {
     }
  //
 
-
-
-  /*  @Override
-    public Tasks updateTask(Long id, TaskDTO taskDTO){
-        Tasks updatedTask = taskRepository.findById(id).get();
-        updatedTask.setTitle(taskDTO.getTitle());
-        updatedTask.setStatus(taskDTO.getStatus());
-        updatedTask.setDescription(taskDTO.getDescription());
-
-        return taskRepository.save(updatedTask);
-    }*/
   @Override
   public TaskDTO updateTask(Long id, TaskDTO taskDTO) {
       Tasks task = taskRepository.findById(id).orElseThrow();

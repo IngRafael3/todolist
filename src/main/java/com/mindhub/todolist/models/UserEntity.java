@@ -18,19 +18,26 @@ public class UserEntity {
     @Column(unique = true)
     private String  email;
 
+    private RolEnum rol = RolEnum.ADMIN;
+
     @OneToMany( mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Tasks> tarea = new HashSet<>();
 
-    public UserEntity(String username, String password, String email) {
+    public UserEntity(String username, String password, String email, RolEnum rol) {
 
         this.username = username;
         this.password = password;
         this.email = email;
+        this.rol = rol;
+
     }
 
     public UserEntity() {
     }
 
+    public RolEnum getRol() {
+        return rol;
+    }
 
     public Long getId() {
         return id;
