@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/h2-console/**").permitAll()
+                                .requestMatchers("/public/**").permitAll()
                                 .requestMatchers("/api/auth/**").permitAll() // Allow public access to specific endpoints
                                 .requestMatchers("/api/user/**").hasAuthority("ADMIN")
                                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
