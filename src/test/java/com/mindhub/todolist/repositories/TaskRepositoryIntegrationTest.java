@@ -36,7 +36,7 @@ public class TaskRepositoryIntegrationTest {
     public void testCreateTask() throws Exception {
         String taskJson = "{ \"title\": \"Test Task\", \"description\": \"Description\" }";
 
-        mockMvc.perform(post("/api/tarea/createdTask")
+        mockMvc.perform(post("/api/task/createdTask")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(taskJson))
                 .andExpect(status().isCreated())  // Verifica que la respuesta sea 201 Created.
@@ -47,7 +47,7 @@ public class TaskRepositoryIntegrationTest {
     @Test
     public void testPutTask()throws Exception{
         String requestBody = "{\"title\":\"nuevaTarea\"}";
-        mockMvc.perform(put("/api/tarea/updatetask/1")
+        mockMvc.perform(put("/api/task/updatetask/1")
                         .contentType("application/json")
                         .content(requestBody))
                 .andExpect(status().isOk())
@@ -56,7 +56,7 @@ public class TaskRepositoryIntegrationTest {
 
     @Test
     public void testDeleteTask()throws Exception{
-        mockMvc.perform(delete("/api/tarea/delete/1"))
+        mockMvc.perform(delete("/api/task/delete/1"))
                 .andExpect(status().isOk());
     }
 }
