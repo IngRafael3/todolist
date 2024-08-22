@@ -32,7 +32,7 @@ public class TaskController {
 
     @GetMapping("/alltask")
     @Operation(summary = "Get ", description = "Retrieve all Task entities.")
-    public ResponseEntity<List<TaskDTO>> geTaskById(){
+    public ResponseEntity<List<TaskDTO>> geTaskAll(){
         List<TaskDTO> allTask =  taskService.findAll();
         return new ResponseEntity<>( allTask, HttpStatus.OK);
     }
